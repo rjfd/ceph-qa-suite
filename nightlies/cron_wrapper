@@ -12,7 +12,7 @@ LOG="/var/log/crontab-nightlies-log/crontab.log"
 # set $LOG_LOCKED_ERR in case locking failed
 LOG_LOCK_ERR="/var/log/crontab-nightlies-log/crontab_lock_problem.$$"
 
-# temp files to store sdtout and stderr
+# temp files to store stdout and stderr
 # named with the PID of this script in their name so they'll be unique
 STDERR="/var/tmp/stderr.$$"
 STDOUT="/var/tmp/stdout.$$"
