@@ -1258,6 +1258,7 @@ class CephManager:
             self.raw_cluster_cmd(*args)
 
     def create_pool_with_unique_name(self, pg_num=16,
+                                     min_size=None,
                                      erasure_code_profile_name=None):
         """
         Create a pool named unique_pool_X where X is unique.
@@ -1269,6 +1270,7 @@ class CephManager:
             self.create_pool(
                 name,
                 pg_num,
+                min_size=min_size,
                 erasure_code_profile_name=erasure_code_profile_name)
         return name
 
@@ -1279,6 +1281,7 @@ class CephManager:
         self.remove_pool(pool_name)
 
     def create_pool(self, pool_name, pg_num=16,
+                    min_size=None,
                     erasure_code_profile_name=None):
         """
         Create a pool named from the pool_name parameter.
@@ -1299,6 +1302,11 @@ class CephManager:
             else:
                 self.raw_cluster_cmd('osd', 'pool', 'create',
                                      pool_name, str(pg_num))
+            if min_size is not None:
+                self.raw_cluster_cmd(
+                    'osd', 'pool', 'set', pool_name,
+                    'min_size',
+                    str(min_size))
             self.pools[pool_name] = pg_num
         time.sleep(1)
 
